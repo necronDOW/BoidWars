@@ -2,6 +2,8 @@
 ## Description
 A clean repository for the Boid Wars game produced during Global Game Jam 2017 ([original](https://github.com/necronDOW/GGJ17_Project8761)).
 
+**Unity Version**: 5.5.0f3
+
 ## Team
 ### Members
 * [Liam Wilson](https://github.com/necronDOW) (Lead Developer, Modeller).
@@ -20,3 +22,4 @@ A clean repository for the Boid Wars game produced during Global Game Jam 2017 (
 
 ## Additional Notes
 * Please ensure that you read the [standards](https://github.com/necronDOW/BoidWars/blob/master/Standards.md) and [procedures](https://github.com/necronDOW/BoidWars/blob/master/Procedures.md) documents before contributing to this project.
+* Ensure that you are working in the correct version of Unity.
