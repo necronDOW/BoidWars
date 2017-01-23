@@ -6,7 +6,7 @@ This document outlines naming conventions and coding standards for this project.
 ## Asset Standards
 To maintain consistency, please follow the Asset naming convention of "ExampleName_Type" (e.g. ExampleName_Material, ExampleName_Model) with the following exceptions:
 * **Audio files**: Replace "Type" with the audio type (e.g. MenuMusic_Music, Shoot_SFX).
-* **Scripts**: Replace "Type" with the script type (e.g. Waypoints_Script, Waypoints_Editor).
+* **Scripts**: Do not include the Type unless it is an Editor Script (e.g. Waypoints, Waypoints_Editor).
 * **Prefabs**: Do not include the Type (e.g. Player, Enemy).
 
 Ensure that assets are added to a folder which associates with the basic type. If a folder doesn't exist, create one in a place which you deem appropriate.
