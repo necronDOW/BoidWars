@@ -61,14 +61,15 @@ public class MaterialLibrary
 
     public void SetRenderColor(MeshRenderer renderer, Color diffuse, Color emission)
     {
-        Material tmpMaterial = new Material(renderer.sharedMaterial);
-        tmpMaterial.SetColor("_Color", diffuse);
-        tmpMaterial.SetColor("_EmissionColor", emission);
+        if (renderer)
+        {
+            Material tmpMaterial = new Material(renderer.sharedMaterial);
+            tmpMaterial.SetColor("_Color", diffuse);
+            tmpMaterial.SetColor("_EmissionColor", emission);
 
-        renderer.sharedMaterial = NewMaterial(tmpMaterial);
-        Object.DestroyImmediate(tmpMaterial);
-
-        Debug.Log(Resources.FindObjectsOfTypeAll(typeof(Material)).Length);
+            renderer.sharedMaterial = NewMaterial(tmpMaterial);
+            Object.DestroyImmediate(tmpMaterial);
+        }
     }
 }
 
@@ -78,26 +79,26 @@ public class MaterialHelper
     {
         MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
 
-        if (renderer && renderer.material != null)
+        if (renderer && renderer.sharedMaterial != null)
         {
-            return renderer.material.GetColor(colorID);
+            return renderer.sharedMaterial.GetColor(colorID);
         }
 
         return Color.magenta;
     }
 
-    public static bool AssignColor(GameObject gameObject, Color diffuse, Color emission = default(Color))
-    {
-        MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+    //public static bool AssignColor(GameObject gameObject, Color diffuse, Color emission = default(Color))
+    //{
+    //    MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
 
-        if (renderer && renderer.material != null)
-        {
-            renderer.material.SetColor("_Color", diffuse);
-            renderer.material.SetColor("_EmissionColor", emission);
+    //    if (renderer && renderer.material != null)
+    //    {
+    //        renderer.material.SetColor("_Color", diffuse);
+    //        renderer.material.SetColor("_EmissionColor", emission);
 
-            return true;
-        }
+    //        return true;
+    //    }
 
-        return false;
-    }
+    //    return false;
+    //}
 }

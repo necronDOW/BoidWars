@@ -38,6 +38,7 @@ public class Painter_Editor : Editor
         GUILayout.Space(10);
         EditorGUILayout.ObjectField(serializedObject.FindProperty("prefab"));
 
+        #region Brush Options
         GUILayout.Space(5);
         _target.density = Mathf.Clamp(EditorGUILayout.IntField("Density:", _target.density), 1, 1000);
         _target.brushSize = EditorGUILayout.Slider("Brush Size:", _target.brushSize, 0.1f, 100.0f);
@@ -57,7 +58,9 @@ public class Painter_Editor : Editor
 
             EditorGUILayout.MinMaxSlider(ref _target.minScale, ref _target.maxScale, _uiMinClamp, _uiMaxClamp);
         }
+        #endregion
 
+        #region Color Options
         GUILayout.Space(5);
         _scaleOptions = EditorGUILayout.Foldout(_scaleOptions, "Color Options");
         if (_scaleOptions)
@@ -78,6 +81,7 @@ public class Painter_Editor : Editor
                 EditorGUILayout.HelpBox("Randomized colours are not optimized, performance may suffer.", MessageType.Warning);
             }
         }
+        #endregion
 
         GUILayout.Space(5);
         if (GUILayout.Button("Undo"))
