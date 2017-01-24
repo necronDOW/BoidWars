@@ -72,9 +72,10 @@ public class Painter : MonoBehaviour
 
     private Color RandomBetweenTwoColors(Color A, Color B)
     {
-        float r = Random.Range(A.r, B.r);
-        float g = Random.Range(A.g, B.g);
-        float b = Random.Range(A.b, B.b);
+        float t = Random.Range(0.0f, 1.0f);
+        float r = A.r + ((B.r - A.r) * t);
+        float g = A.g + ((B.g - A.g) * t);
+        float b = A.b + ((B.b - A.b) * t);
 
         return new Color(r, g, b);
     }
