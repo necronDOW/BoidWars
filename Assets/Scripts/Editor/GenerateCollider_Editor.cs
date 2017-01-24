@@ -4,76 +4,14 @@ using System.Reflection;
 using UnityEngine;
 using UnityEditor;
 
-public class SerializedPropertyExt
-{
-    public static T GetObject<T>(SerializedProperty property) where T : class
-    {
-        SerializedObject serializedObject = property.serializedObject;
-        if (serializedObject == null)
-        {
-            return null;
-        }
-
-        Object targetObject = serializedObject.targetObject;
-        object obj = targetObject.GetType().GetField(property.name).GetValue(targetObject);
-        if (obj == null)
-        {
-            return null;
-        }
-        
-        T actualObject = null;
-        if (obj.GetType().IsArray)
-        {
-            int index = ((object[])obj).Length - 1;
-
-            if (index >= 0)
-            {
-                actualObject = ((T[])obj)[0];
-            }
-        }
-        else
-        {
-            actualObject = obj as T;
-        }
-
-        return actualObject;
-    }
-    public static T GetObject<T>(SerializedObject serializedObject) where T : class
-    {
-        Object targetObject = serializedObject.targetObject;
-        object obj = targetObject;
-        if (obj == null)
-        {
-            return null;
-        }
-
-        T actualObject = null;
-        if (obj.GetType().IsArray)
-        {
-            int index = ((object[])obj).Length - 1;
-
-            if (index >= 0)
-            {
-                actualObject = ((T[])obj)[0];
-            }
-        }
-        else
-        {
-            actualObject = obj as T;
-        }
-
-        return actualObject;
-    }
-}
-
 [CustomEditor(typeof(GenerateCollider))]
 public class GenerateCollider_Editor : Editor
 {
-    private GenerateCollider gc;
+    private GenerateCollider _target;
 
     private void OnEnable()
     {
-        gc = (GenerateCollider)target;
+        _target = (GenerateCollider)target;
     }
 
     public override void OnInspectorGUI()
@@ -89,10 +27,10 @@ public class GenerateCollider_Editor : Editor
         {
             serializedObject.ApplyModifiedProperties();
 
-            Transform parent = SerializedPropertyExt.GetObject<Transform>(targets);
+            Transform parent = ExtendedEditor.GetObject<Transform>(targets);
             if (parent && !parent.GetComponent<MeshFilter>())
             {
-                AddForChildren(SerializedPropertyExt.GetObject<Transform>(targets), gc);
+                AddForChildren(ExtendedEditor.GetObject<Transform>(targets), _target);
             }
         }
         
@@ -100,20 +38,20 @@ public class GenerateCollider_Editor : Editor
         GUILayout.Space(5);
         if (GUILayout.Button("Update Colliders"))
         {
-            gc.UpdateColliders();
+            _target.UpdateColliders();
         }
 
-        if (gc.targets != null)
+        if (_target.targets != null)
         {
-            int colliderDifference = gc.targets.Length - gc.colliderCount;
+            int colliderDifference = _target.targets.Length - _target.colliderCount;
             if (colliderDifference <= 0)
             {
                 for (int i = 0; i < (colliderDifference * -1); i++)
                 {
-                    gc.DeleteCollider(gc.colliders.Count - 1);
+                    _target.DeleteCollider(_target.colliders.Count - 1);
                 }
 
-                gc.colliderCount += colliderDifference;
+                _target.colliderCount += colliderDifference;
             }
         }
 

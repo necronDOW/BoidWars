@@ -95,7 +95,7 @@ public class GenerateCollider : MonoBehaviour
         return _visible ? "Hide Colliders" : "Show Colliders";
     }
 
-    private Vector3 GetDimensions(Transform t)
+    public static Vector3 GetDimensions(Transform t)
     {
         Vector3 min = Vector3.one * Mathf.Infinity; 
         Vector3 max = Vector3.one * Mathf.NegativeInfinity;
