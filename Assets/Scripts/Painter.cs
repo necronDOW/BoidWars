@@ -82,11 +82,9 @@ public class Painter : MonoBehaviour
 
     private void SetInstanceColor(MeshRenderer renderer, Color color)
     {
-        Material tmpMaterial = new Material(renderer.sharedMaterial);
-        tmpMaterial.SetColor("_Color", tmpMaterial.GetColor("_Color") * color);
-        tmpMaterial.SetColor("_EmissionColor", tmpMaterial.GetColor("_EmissionColor") * color);
-        
-        renderer.sharedMaterial = MaterialLibrary.Get().NewMaterial(tmpMaterial);
-        DestroyImmediate(tmpMaterial);
+        Color diffuse = renderer.sharedMaterial.GetColor("_Color") * color;
+        Color emission = renderer.sharedMaterial.GetColor("_EmissionColor") * color;
+
+        MaterialLibrary.Get().SetRenderColor(renderer, diffuse, emission);
     }
 }

@@ -58,4 +58,46 @@ public class MaterialLibrary
 
         return false;
     }
+
+    public void SetRenderColor(MeshRenderer renderer, Color diffuse, Color emission)
+    {
+        Material tmpMaterial = new Material(renderer.sharedMaterial);
+        tmpMaterial.SetColor("_Color", diffuse);
+        tmpMaterial.SetColor("_EmissionColor", emission);
+
+        renderer.sharedMaterial = NewMaterial(tmpMaterial);
+        Object.DestroyImmediate(tmpMaterial);
+
+        Debug.Log(Resources.FindObjectsOfTypeAll(typeof(Material)).Length);
+    }
+}
+
+public class MaterialHelper
+{
+    public static Color GetColor(GameObject gameObject, string colorID)
+    {
+        MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+
+        if (renderer && renderer.material != null)
+        {
+            return renderer.material.GetColor(colorID);
+        }
+
+        return Color.magenta;
+    }
+
+    public static bool AssignColor(GameObject gameObject, Color diffuse, Color emission = default(Color))
+    {
+        MeshRenderer renderer = gameObject.GetComponent<MeshRenderer>();
+
+        if (renderer && renderer.material != null)
+        {
+            renderer.material.SetColor("_Color", diffuse);
+            renderer.material.SetColor("_EmissionColor", emission);
+
+            return true;
+        }
+
+        return false;
+    }
 }
