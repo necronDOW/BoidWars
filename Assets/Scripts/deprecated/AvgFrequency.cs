@@ -8,6 +8,7 @@ using UnityEditor;
 
 public class AvgFrequency : MonoBehaviour
 {
+    //initialize audio spectrum, comprised of 256 floats representing amplitude at that frequency position
     private float[] spectrum = new float[256];
     private double lastTime;
 
@@ -19,8 +20,9 @@ public class AvgFrequency : MonoBehaviour
     void Update()
     {
         lastTime += Time.deltaTime;
+        //get audio spectrum data (frequency info)
         AudioListener.GetSpectrumData(spectrum, 0, FFTWindow.Rectangular);
-
+        //Draw lines for each frequency range, representing amplitude
         for (int i = 1; i < spectrum.Length - 1; i++)
         {
             Debug.DrawLine(new Vector3(i - 1, spectrum[i] + 10, 0), new Vector3(i, spectrum[i + 1] + 10, 0), Color.red);
@@ -29,14 +31,14 @@ public class AvgFrequency : MonoBehaviour
             Debug.DrawLine(new Vector3(Mathf.Log(i - 1), Mathf.Log(spectrum[i - 1]), 3), new Vector3(Mathf.Log(i), Mathf.Log(spectrum[i]), 3), Color.blue);
 
             //BDebug.Log(spectrum[1]);
-
+            //check if amplitude meets a threshold every 0.3 seconds
             if (spectrum[1] > 0.36 && lastTime > 0.3)
             {
                 lastTime = 0;
             }
         }
     }
-
+    //return spectrum amplitudes
     public float GetValue(int index)
     {
         return spectrum[index];
